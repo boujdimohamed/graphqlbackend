@@ -1,0 +1,64 @@
+scalar JSON
+
+# Query-Typen
+type Query {
+    # Liefert die Statistik über Aufgaben
+    getTaskStatistics: TaskStatistics
+
+    # Filtert Aufgaben basierend auf bestimmten Kriterien
+    filterTasks(filter: TaskFilter): [Task]
+
+    # Holt alle Aufgaben
+    getAllTasks: [Task]
+
+    # Holt eine Aufgabe basierend auf ihrer ID
+    getTaskById(id: ID!): Task
+}
+
+# Mutation-Typen
+type Mutation {
+    # Aktualisiert dynamisch Felder einer Aufgabe
+    updateTaskField(id: ID!, updates: JSON!): Task
+
+    # Aktualisiert den Fortschritt einer Aufgabe
+    updateTaskProgress(id: ID!, progress: Int!): Task
+}
+
+# Objekt-Typ für Aufgabenstatistiken
+type TaskStatistics {
+    # Anzahl der offenen Aufgaben
+    open: Int
+    # Anzahl der Aufgaben, die in Bearbeitung sind
+    inProgress: Int
+    # Anzahl der erledigten Aufgaben
+    completed: Int
+}
+
+# Input-Typ für Filterkriterien
+input TaskFilter {
+    priority: String
+    status: String
+    startDateFrom: String
+    startDateTo: String
+    endDateFrom: String
+    endDateTo: String
+    tag: String
+}
+
+# Objekt-Typ für Aufgaben
+type Task {
+    id: ID!
+    name: String
+    priority: String
+    status: String
+    startDate: String
+    endDate: String
+    progress: Int
+    tags: [Tag]
+}
+
+# Objekt-Typ für Tags
+type Tag {
+    id: ID!
+    name: String
+}
