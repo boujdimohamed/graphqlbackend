@@ -9,11 +9,13 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping(path = "api/v1/task")
 public class TaskGraphQLController {
 
     private final TaskServiceGraphQL taskServiceGraphQL;
