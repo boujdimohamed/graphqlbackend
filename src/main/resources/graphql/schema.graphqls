@@ -55,6 +55,12 @@ type Task {
     endDate: String
     progress: Int
     tags: [Tag]
+    assignees: [Assignee]
+}
+
+type Assignee {
+    id: ID!
+    name: String
 }
 
 # Objekt-Typ für Tags

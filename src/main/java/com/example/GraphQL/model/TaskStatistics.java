@@ -5,11 +5,11 @@ package com.example.GraphQL.model;
  */
 public class TaskStatistics {
 
-    private long open;        // Anzahl der offenen Aufgaben
-    private long inProgress;  // Anzahl der Aufgaben, die in Bearbeitung sind
-    private long completed;   // Anzahl der abgeschlossenen Aufgaben
+    private long open;
+    private long inProgress;
+    private long completed;
 
-    // Konstruktor
+    
     public TaskStatistics(long open, long inProgress, long completed) {
         this.open = open;
         this.inProgress = inProgress;

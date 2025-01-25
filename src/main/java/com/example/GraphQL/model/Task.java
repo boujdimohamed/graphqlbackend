@@ -1,94 +1,50 @@
 package com.example.GraphQL.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
 @Entity
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;                  // Eindeutige ID der Aufgabe
 
-    private String name;
-    private String priority;
-    private String status;
-    private String startDate;
-    private String endDate;
-    private int progress;
+    private String name;              // Name der Aufgabe
+    private String description;       // Beschreibung der Aufgabe
+    private String startDate;         // Startdatum der Aufgabe
+    private String endDate;           // Enddatum der Aufgabe
+    private String startTime;         // Startzeit der Aufgabe
+    private String endTime;           // Endzeit der Aufgabe
+    private String priority;          // Priorität: hoch, mittel, niedrig
+    private Integer progress;         // Fortschritt: 0-100 in 10er-Schritten
+    private String status;            // Status: offen, in Arbeit, erledigt
+    private boolean taskCompleted;    // Boolean-Status für "erledigt"
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Tag> tags;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")     // Fremdschlüssel für die Tags in der Task-Tabelle
+    private List<Tag> tags;           // Liste von Tags für die Aufgabe
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")     // Fremdschlüssel für die Assignees in der Task-Tabelle
+    private List<Assignee> assignees; // Liste von Assignees für die Aufgabe
+
+    // Standardkonstruktor
+    public Task() {
+        this.tags = new ArrayList<>(); // Initialisierung der Tags
+        this.progress = 0;             // Standardfortschritt: 0%
+        this.status = "offen";         // Standardstatus: offen
+        this.taskCompleted = false;    // Standard: nicht erledigt
+        this.assignees = new ArrayList<>(); // Initialisierung der Assignees
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Getter und Setter
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPriority() {
-        return priority;
-    }
-
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
-    public int getProgress() {
-        return progress;
-    }
-
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
 }
